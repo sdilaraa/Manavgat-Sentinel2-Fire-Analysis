@@ -1,0 +1,58 @@
+var manavgat = ee.Geometry.Point([31.48, 36.88]);
+Map.centerObject(manavgat, 12);
+
+var s2 = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED");
+var yanginSonrasi = s2.filterBounds(manavgat)
+  .filterDate('2021-08-10', '2021-08-25')
+  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 10))
+  .median();
+
+Map.addLayer(yanginSonrasi, {bands: ['B12', 'B8', 'B4'], min: 0, max: 3000}, 'Manavgat Uydu Goruntusu');
+
+var yanmis_etiketli = ee.FeatureCollection(yanmis).map(function(f) { return f.set('class', 1); });
+var saglikli_etiketli = ee.FeatureCollection(saglikli).map(function(f) { return f.set('class', 0); });
+
+var tumVeri = yanmis_etiketli.merge(saglikli_etiketli).randomColumn();
+
+var egitimBolumu = tumVeri.filter(ee.Filter.lt('random', 0.8));
+var testBolumu = tumVeri.filter(ee.Filter.gte('random', 0.8));
+
+var bantlar = ['B2', 'B3', 'B4', 'B8', 'B11', 'B12'];
+
+var tumPikseller = yanginSonrasi.select(bantlar).sampleRegions({
+  collection: tumVeri,
+  properties: ['class'],
+  scale: 10,
+  tileScale: 16
+});
+
+var yanmisOrnek = tumPikseller.filter(ee.Filter.eq('class', 1)).limit(2500);
+var saglikliOrnek = tumPikseller.filter(ee.Filter.eq('class', 0)).limit(2500);
+
+var dengeliEgitim = yanmisOrnek.merge(saglikliOrnek);
+
+var classifier = ee.Classifier.smileRandomForest(100).train({
+  features: dengeliEgitim,
+  classProperty: 'class',
+  inputProperties: bantlar
+});
+
+var siniflandirilmis = yanginSonrasi.select(bantlar).classify(classifier);
+Map.addLayer(siniflandirilmis, {min: 0, max: 1, palette: ['green', 'red']}, 'Random Forest Yangin Haritasi');
+
+var testPikselleri = yanginSonrasi.select(bantlar).sampleRegions({
+  collection: testBolumu,
+  properties: ['class'],
+  scale: 10
+});
+
+var testTahmini = testPikselleri.classify(classifier);
+var hataMatrisi = testTahmini.errorMatrix('class', 'classification');
+
+print('--- ANALİZ RAPORU ---');
+print('Eğitim Verisi Sayısı (Poligonlar):', egitimBolumu.size());
+print('Modele Giren Piksel Sayısı:', tumPikseller.size());
+print('Test Doğruluk Oranı (Overall Accuracy):', hataMatrisi.accuracy());
+print('Kappa Katsayısı:', hataMatrisi.kappa());
+print('Hata Matrisi:', hataMatrisi);
+print('Eğitime giren dengeli veri sayısı:', dengeliEgitim.size());
