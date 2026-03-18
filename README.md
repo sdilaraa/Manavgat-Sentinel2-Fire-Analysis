@@ -1,25 +1,19 @@
-# Manavgat-Sentinel2-Fire-Analysis
-# Manavgat Yangın Analizi Projesi (Süreç Devam Ediyor...)
+# Wildfire Detection using Satellite Data
 
-Bu proje, Manavgat yangınını Sentinel-2 verileriyle analiz etmek üzere başlatılmış bir çalışmadır. Şu an aktif geliştirme aşamasındadır. 
+## Project Description
+This project focuses on detecting wildfire-affected areas using satellite imagery.
 
-## Mevcut Durum (Güncel)
-Bugüne kadar yapılan aşamalar:
-- **✅Veri Toplama:** Sentinel-2 uydu görüntüleri filtrelendi.
-- **✅ Ön Analiz:** dNBR (Yangın Şiddeti) haritası başarıyla üretildi.
-- **✅ Model Eğitimi:** Random Forest algoritması %99 doğrulukla çalıştırıldı.
-- **✅ Veri Dengeleme:** 5.000 örneklem noktasıyla sınıflandırma optimize edildi.
+## Data
+- Sentinel-2 satellite data  
+- Google Earth Engine  
 
-## Gelecek Adımlar (Yapılacaklar)
-Proje kapsamında eklenmesi planlanan yeni çıktılar:
-- [ ] Daha geniş zaman aralıklarıyla karşılaştırma.
-- [ ] Yeni indekslerin (NDVI, BAIS2 vb.) modele entegre edilmesi.
-- [ ] Alan hesaplamaları (Kaç hektar yandı?).
+## Methods
+- dNBR (Normalized Burn Ratio)
+- Image processing  
 
-## Mevcut Görseller
-Şu anki analiz sonuçlarından ilk görüntüler:
+## Results
+- Identified burned areas  
+- Visualized fire severity  
 
-> *Görselleştirme: Analiz çıktıları yüksek çözünürlüklü olarak işlenmektedir, yakında eklenecektir.*
-
----
-*Not: Bu proje bir öğrenme ve geliştirme sürecidir. Yeni bulgular eklendikçe güncellenecektir.*
+## Technologies
+Python, Google Earth Engine, JavaScript  
