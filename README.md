@@ -17,3 +17,12 @@ This project focuses on detecting wildfire-affected areas using satellite imager
 
 ## Technologies
 Python, Google Earth Engine, JavaScript  
+
+## How to Run
+
+- Open in Google Earth Engine
+- Run the script
+
+## Output
+
+![Result](result.png)
