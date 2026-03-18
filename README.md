@@ -23,6 +23,13 @@ Python, Google Earth Engine, JavaScript
 - Open in Google Earth Engine
 - Run the script
 
-## Output
+## Output (Manavgat Wildfire 2021)
 
-![Result](result.png)
+### dNBR Severity Map
+![dNBR Map](images/dnbr-severity-map.png)
+
+### Post-Fire Image
+![Post Fire](images/post-fire-image.png)
+
+### Burned Area Detection
+![Burned Area](images/burned-area-detection.png)
