@@ -1,5 +1,13 @@
 # Wildfire Detection using Remote Sensing & Machine Learning
 
+## ❗ Problem Statement
+
+Wildfires cause significant environmental and economic damage worldwide.  
+Accurate and fast detection of burned areas is critical for disaster response and ecological assessment.
+
+Traditional methods are time-consuming and not scalable.  
+This project aims to automate burned area detection using satellite imagery and machine learning.
+
 ## Project Description
 This project focuses on detecting wildfire-affected areas using Sentinel-2 satellite imagery and machine learning models in Google Earth Engine.
 
